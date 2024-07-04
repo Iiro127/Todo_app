@@ -52,4 +52,19 @@ public class TodoHandler extends DatabaseHelper {
         }
         return exercises;
     }
+
+    public boolean changeFavourite(ToDoItem toDoItem){
+        ContentValues values = new ContentValues();
+
+        values.put("title", toDoItem.getText());
+        values.put("isDone", toDoItem.isDone());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean success = db.update("Todos", values, "id='" + toDoItem.getId() + "'", null) > 0;
+
+        db.close();
+
+        return success;
+    }
+
 }

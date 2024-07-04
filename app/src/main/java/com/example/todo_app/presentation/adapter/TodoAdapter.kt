@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_app.R
 import com.example.todo_app.presentation.data.ToDoItem
 
-class ToDoAdapter(private val todoList: MutableList<ToDoItem>) :
-    RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
+class ToDoAdapter(private val todoList: MutableList<ToDoItem>) : RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
 
     inner class ToDoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTodo: TextView = itemView.findViewById(R.id.tv_todo)

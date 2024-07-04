@@ -6,6 +6,7 @@
 
 package com.example.todo_app.presentation
 
+import android.health.connect.datatypes.units.Length
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var adapter: ToDoAdapter
+    private lateinit var TodoList: ArrayList<ToDoItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +64,24 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             showAddToDoDialog()
         }
+
+        loadTodos()
     }
 
     fun readAll(): ArrayList<ToDoItem> {
         return TodoHandler(this@MainActivity).readAll()
+    }
+
+    fun loadTodos(): Boolean {
+        try {
+            TodoList = readAll()
+            adapter = ToDoAdapter(TodoList)
+            recyclerView.adapter = adapter
+            return true
+        } catch (e: Exception){
+            Toast.makeText(this@MainActivity, "Unable to load todos", Toast.LENGTH_SHORT)
+            return false
+        }
     }
 
     private fun showAddToDoDialog() {
@@ -79,12 +95,11 @@ class MainActivity : AppCompatActivity() {
         builder.setView(input)
 
         builder.setPositiveButton("Add") { dialog, _ ->
-
-
             val todoText = input.text.toString()
             if (todoText.isNotEmpty()) {
                 val newTodo = ToDoItem(null, todoText, false)
                 TodoHandler(this@MainActivity).create(newTodo)
+                Toast.makeText(this@MainActivity, "ToDo item added", Toast.LENGTH_SHORT).show()
 
                 loadTodos()
             } else {
@@ -99,9 +114,5 @@ class MainActivity : AppCompatActivity() {
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
 
         builder.show()
-    }
-
-    private fun loadTodos() {
-        val all = readAll();
     }
 }
