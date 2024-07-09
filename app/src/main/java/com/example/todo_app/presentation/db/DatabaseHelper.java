@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sqlQuery = "CREATE TABLE Todos ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, isDone BOOLEAN )";
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS Todos ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, isDone INTEGER )";
         sqLiteDatabase.execSQL(sqlQuery);
     }
 

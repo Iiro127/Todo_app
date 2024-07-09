@@ -9,6 +9,7 @@ package com.example.todo_app.presentation
 import android.health.connect.datatypes.units.Length
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
 import android.widget.EditText
 import android.widget.TextView
@@ -75,6 +76,11 @@ class MainActivity : AppCompatActivity() {
     fun loadTodos(): Boolean {
         try {
             TodoList = readAll()
+
+            for (todo in TodoList){
+                Log.e("Todo log", todo.toString())
+            }
+
             adapter = ToDoAdapter(TodoList)
             recyclerView.adapter = adapter
             return true
@@ -97,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton("Add") { dialog, _ ->
             val todoText = input.text.toString()
             if (todoText.isNotEmpty()) {
-                val newTodo = ToDoItem(null, todoText, false)
+                val newTodo = ToDoItem(null, todoText, 0)
                 TodoHandler(this@MainActivity).create(newTodo)
                 Toast.makeText(this@MainActivity, "ToDo item added", Toast.LENGTH_SHORT).show()
 
