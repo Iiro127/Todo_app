@@ -48,7 +48,7 @@ class ToDoAdapter(private val todoList: MutableList<ToDoItem>, private val mainA
         holder.tvTodo.setOnClickListener {
             Log.d("TodoLog", "TextView clicked: ${todoItem.text}")
             // Handle the click event here
-            Toast.makeText(context, "Clicked on: ${todoItem.text}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
             todoItem.id?.let { it1 -> todoHandler.delete(it1) }
 
             mainActivity.loadTodos()
