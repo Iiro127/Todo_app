@@ -38,6 +38,7 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import com.example.todo_app.R
+import com.example.todo_app.R.id.txt_noTodos
 import com.example.todo_app.presentation.adapter.ToDoAdapter
 import com.example.todo_app.presentation.data.ToDoItem
 import com.example.todo_app.presentation.db.TodoHandler
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
+    private lateinit var txt_noTodos: TextView
     private lateinit var adapter: ToDoAdapter
     private lateinit var TodoList: ArrayList<ToDoItem>
 
@@ -57,8 +59,9 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recycler_view)
         fab = findViewById(R.id.fab)
+        txt_noTodos = findViewById(R.id.txt_noTodos)
 
-        adapter = ToDoAdapter(mutableListOf())
+        adapter = ToDoAdapter(mutableListOf(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -81,8 +84,14 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Todo log", todo.toString())
             }
 
-            adapter = ToDoAdapter(TodoList)
+            adapter = ToDoAdapter(TodoList, this)
             recyclerView.adapter = adapter
+
+            if (TodoList.size == 0) {
+                txt_noTodos.setText("No todos")
+            } else {
+                txt_noTodos.setText("")
+            }
             return true
         } catch (e: Exception){
             Toast.makeText(this@MainActivity, "Unable to load todos", Toast.LENGTH_SHORT)

@@ -19,7 +19,7 @@ import com.example.todo_app.presentation.db.TodoHandler
 private lateinit var todoHandler: TodoHandler
 private lateinit var context: Context
 
-class ToDoAdapter(private val todoList: MutableList<ToDoItem>) : RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
+class ToDoAdapter(private val todoList: MutableList<ToDoItem>, private val mainActivity: MainActivity) : RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
 
     inner class ToDoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTodo: TextView = itemView.findViewById(R.id.tv_todo)
@@ -50,6 +50,8 @@ class ToDoAdapter(private val todoList: MutableList<ToDoItem>) : RecyclerView.Ad
             // Handle the click event here
             Toast.makeText(context, "Clicked on: ${todoItem.text}", Toast.LENGTH_SHORT).show()
             todoItem.id?.let { it1 -> todoHandler.delete(it1) }
+
+            mainActivity.loadTodos()
         }
     }
 
